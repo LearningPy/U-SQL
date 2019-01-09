@@ -1,0 +1,27 @@
+// For adding date part to File Name for daily incremental file
+DECLARE @fileDate string = "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4072/Raw/Week_" + DateTime.Now.AddDays(-7).ToString("MMddyyyy") + "_to_" + DateTime.Now.AddDays(-1).ToString("MMddyyyy") + "_F4072" ;
+
+
+//Get Base File from Raw
+ 
+@MergedDailyFiles =
+  EXTRACT 
+    adast string, aditm string, adlitm string, adaitm string, 
+	adan8 string, adigid string, adcgid string, adogid string, 
+	adcrcd string, aduom string, admnq string, adeftj string, 
+	adexdj string, adbscd string, adledg string, adfrmn string, 
+	adfvtr string, adfgy string, adatid string, adurcd string, 
+	adurdt string, adurat string, adurab string, adurrf string, 
+	adnbrord string, aduomvid string, adfvum string, adpartfg string, 
+	adaprs string, aduser string, adpid string, adjobn string, adupmj string, 
+	adtday string, adbktpid string, adcrcdvid string, adrulename string 
+
+  FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4072/Raw/F4072_{*}"
+  USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+ 
+	
+  // Output of Previous Day data                  
+  OUTPUT @MergedDailyFiles
+  TO @fileDate
+  USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+

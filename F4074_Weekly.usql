@@ -1,0 +1,30 @@
+
+//Get Base File from Raw
+ 
+// For adding date part to File Name for daily incremental file
+DECLARE @fileDate string = "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4074/Raw/Week_" + DateTime.Now.AddDays(-7).ToString("MMddyyyy") + "_to_" + DateTime.Now.AddDays(-1).ToString("MMddyyyy") + "_F4074";
+
+
+
+@MergedDailyFiles =
+  EXTRACT 
+     
+aldoco string, aldcto string,alkcoo string, alsfxo string, allnid string, alakid string, alsrcfd string, aloseq string,
+alsubseq string, altier string, alasn string, alast string, alitm string, alan8 string, alcrcd string, aluom string,
+almnq string, alledg string, alfrmn string, albscd string, alfvtr string, alabas string, aluprc string, alfup string,
+alglc string, alarsn string, alacnt string, alsbif string, almded string, alprov string, alatid string, aligid string,
+alcgid string, alogid string, alanps string, albsdval string, alsrflag string, aladjcal string, alnbrord string, aluomvid string,
+alolvl string, aladjsts string, aladjref string, alaccan8 string, albnad string, aladjgrp string, almeadj string, alfvum string,
+alpdcl string, alcfgid string, alcfgcid string, alaprp1 string, alaprp2 string, alaprp3 string, alaprp4 string, alaprp5 string, 
+alaprp6 string, alndpi string, aluser string, alpid string, aljobn string, alupmj string, altday string, alpmtn string, alrulename string, alpa04 string, aladjqty string, alqtypy string, alstprcf string, altstrsnm string
+ 
+ FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4074/Raw/F4074_{*}"
+ USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+
+
+                
+// Output of Previous Day data                  
+  OUTPUT @MergedDailyFiles
+  TO @fileDate
+  USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+

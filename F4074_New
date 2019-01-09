@@ -1,0 +1,121 @@
+// For adding date part to File Name for daily incremental file
+DECLARE @fileDate string = "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4074/Raw/F4074_" + DateTime.Now.AddDays(-1).ToString("MMddyyyy");
+
+
+@BaseFile =    EXTRACT    
+aldoco string, aldcto string,alkcoo string, alsfxo string, allnid string, alakid string, alsrcfd string, aloseq string,
+alsubseq string, altier string, alasn string, alast string, alitm string, alan8 string, alcrcd string, aluom string,
+almnq string, alledg string, alfrmn string, albscd string, alfvtr string, alabas string, aluprc string, alfup string,
+alglc string, alarsn string, alacnt string, alsbif string, almded string, alprov string, alatid string, aligid string,
+alcgid string, alogid string, alanps string, albsdval string, alsrflag string, aladjcal string, alnbrord string, aluomvid string,
+alolvl string, aladjsts string, aladjref string, alaccan8 string, albnad string, aladjgrp string, almeadj string, alfvum string,
+alpdcl string, alcfgid string, alcfgcid string, alaprp1 string, alaprp2 string, alaprp3 string, alaprp4 string, alaprp5 string, 
+alaprp6 string, alndpi string, aluser string, alpid string, aljobn string, alupmj string, altday string, alpmtn string, alrulename string,
+alpa04 string, aladjqty string, alqtypy string, alstprcf string, altstrsnm string
+ 
+ FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4074/Raw/_F4074_Base"
+  USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);   
+  
+  
+  @DeltaFile =    EXTRACT    
+aldoco string, aldcto string,alkcoo string, alsfxo string, allnid string, alakid string, alsrcfd string, aloseq string,
+alsubseq string, altier string, alasn string, alast string, alitm string, alan8 string, alcrcd string, aluom string,
+almnq string, alledg string, alfrmn string, albscd string, alfvtr string, alabas string, aluprc string, alfup string,
+alglc string, alarsn string, alacnt string, alsbif string, almded string, alprov string, alatid string, aligid string,
+alcgid string, alogid string, alanps string, albsdval string, alsrflag string, aladjcal string, alnbrord string, aluomvid string,
+alolvl string, aladjsts string, aladjref string, alaccan8 string, albnad string, aladjgrp string, almeadj string, alfvum string,
+alpdcl string, alcfgid string, alcfgcid string, alaprp1 string, alaprp2 string, alaprp3 string, alaprp4 string, alaprp5 string, 
+alaprp6 string, alndpi string, aluser string, alpid string, aljobn string, alupmj string, altday string, alpmtn string, alrulename string,
+alpa04 string, aladjqty string, alqtypy string, alstprcf string, altstrsnm string
+ 
+ FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4074/Transient/F4074"
+  USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+
+  
+   //update with current data
+  @UpdateOldData =
+			SELECT d1.ALDOCO, d1.ALDCTO, d1.ALKCOO, d1.ALSFXO, d1.ALLNID, d1.ALAKID, d1.ALSRCFD, d1.ALOSEQ, d1.ALSUBSEQ, d1.ALTIER, d1.ALASN, d1.ALAST, d1.ALITM, d1.ALAN8, 
+					d1.ALCRCD, d1.ALUOM, d1.ALMNQ, d1.ALLEDG, d1.ALFRMN, d1.ALBSCD, d1.ALFVTR, d1.ALABAS, d1.ALUPRC, d1.ALFUP, d1.ALGLC, d1.ALARSN, d1.ALACNT, d1.ALSBIF, d1.ALMDED, d1.ALPROV, d1.ALATID, d1.ALIGID, d1.ALCGID, d1.ALOGID, d1.ALANPS, d1.ALBSDVAL, d1.ALSRFLAG, d1.ALADJCAL, d1.ALNBRORD, d1.ALUOMVID, d1.ALOLVL, d1.ALADJSTS, d1.ALADJREF, d1.ALACCAN8, d1.ALBNAD, d1.ALADJGRP, d1.ALMEADJ, d1.ALFVUM, d1.ALPDCL, d1.ALCFGID, d1.ALCFGCID, d1.ALAPRP1, d1.ALAPRP2, d1.ALAPRP3, d1.ALAPRP4, d1.ALAPRP5, d1.ALAPRP6, d1.ALNDPI, d1.ALUSER, d1.ALPID, d1.ALJOBN, d1.ALUPMJ, d1.ALTDAY, d1.ALPMTN, d1.ALRULENAME, d1.ALPA04, d1.ALADJQTY, d1.ALQTYPY, d1.ALSTPRCF, d1.ALTSTRSNM
+
+		FROM @BaseFile AS b1
+			    INNER JOIN
+             @DeltaFile AS d1
+			 ON  b1.aldoco == d1.aldoco 
+			 AND b1.aldcto == d1.aldcto 
+			 AND b1.alkcoo == d1.alkcoo 
+			 AND b1.alsfxo == d1.alsfxo 
+			 AND b1.allnid == d1.allnid
+			 AND b1.alakid == d1.alakid 
+			 AND b1.alsrcfd == d1.alsrcfd 
+			 AND b1.aloseq == d1.aloseq 
+			 AND b1.alsubseq == d1.alsubseq
+			 AND b1.altier == d1.altier 
+			 AND b1.alpa04 == d1.alpa04 ;
+			
+     
+		
+	@NewData =
+			SELECT * FROM @DeltaFile AS d2
+			ANTISEMIJOIN
+				( SELECT * FROM @BaseFile ) AS b2
+               ON  b2.aldoco == d2.aldoco 
+			 AND b2.aldcto == d2.aldcto 
+			 AND b2.alkcoo == d2.alkcoo 
+			 AND b2.alsfxo == d2.alsfxo 
+			 AND b2.allnid == d2.allnid
+			 AND b2.alakid == d2.alakid 
+			 AND b2.alsrcfd == d2.alsrcfd 
+			 AND b2.aloseq == d2.aloseq 
+			 AND b2.alsubseq == d2.alsubseq
+			 AND b2.altier == d2.altier 
+			 AND b2.alpa04 == d2.alpa04 ;
+		
+
+		 
+			// Merge both @NewData and @UpdateOldData	 
+			@mergedFile =
+				SELECT *
+				FROM @NewData
+				UNION ALL
+				SELECT *
+				FROM @UpdateOldData;
+
+
+
+
+ // Output for Updated  Merged File     
+ OUTPUT @mergedFile
+  TO "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4074/Raw/_F4074_NewCode"
+USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+ 
+ 
+ // Output daily delta file  into Curated folder   
+ OUTPUT @deltaFiles
+  TO "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4074/Curated/F4074"
+USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+ 
+ 
+// Output of Previous Day data                  
+OUTPUT @deltaFiles
+  TO @fileDate
+  USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);				
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

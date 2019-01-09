@@ -1,0 +1,84 @@
+ @Part_A =
+	EXTRACT 
+	sddcto string, sdkcoo string, sddoco string, sdlnid string, sdsfxo string, sdmcu string, sdco string, sdokco string,
+	sdoorn string, sdocto string, sdrkco string, sdrorn string, sdrcto string, sddmct string, sdvr01 string, sdvr02 string,
+	sdlitm string, sdaitm string, sdlocn string, sdlotn string, sdfrgd string, sdthgd string, sddsc1 string, sddsc2 string,
+	sdlnty string, sdnxtr string, sdlttr string, sdemcu string, sdrlit string, sdsrp1 string, sdsrp2 string, sdsrp3 string,
+	sdsrp4 string, sdsrp5 string, sdprp1 string, sdprp2 string, sdprp3 string, sdprp4 string, sdprp5 string, sduom string,
+	sdcomm string, sdotqy string,  sdprov string, sdtpc string, sdapum string, sdcsto string, sdinmg string, sdptc string,
+	sdryin string, sddtbs string, sdasn string, sdprgr string, sdclvl string, sdkco string, sddct string, sdodct string,
+	sdokc string, sdtax1 string, sdtxa1 string, sdexr1 string, sdatxt string, sdprio string, sdresl string, sdback string,
+	sdsbal string, sdapts string, sdlob string, sdeuse string, sddtys string, sdntr string, sdmot string, sdrout string,
+	sdstop string, sdzon string, sdcnid string, sdfrth string, sdshcm string,  sdshcn string, sdsern string,  sduom1 string,
+	sduom2 string, sduom4 string, sdwtum string, sdvlum string, sdrprc string, sdorpr string, sdorp string, sdcmgp string,
+	sdglc string, sdso01 string, sdso02 string, sdso03 string, sdso04 string, sdso05 string, sdso06 string, sdso07 string,
+	sdso08 string, sdso09 string, sdso10 string, sdso11 string, sdso12 string, sdso13 string, sdso14 string, sdso15 string,
+	sdacom string, sdcmcg string, sdrcd string, sdgwum string, sdsbl string, sdsblt string, sdlcod string, sdupc1 string,
+	sdupc2 string, sdupc3 string, sdswms string, sduncd string, sdcrmd string, sdcrcd string, sdurcd string, sdurrf string,
+	sdtorg string, sduser string, sdpid string, sdjobn string, sdso16 string, sdso17 string, sdso18 string, sdso19 string,
+	sdso20 string, sdir01 string, sdir02 string, sdir03 string, sdir04 string, sdir05 string, sdvr03 string, sdpsig string,
+	sdrlnu string, sdxdck string, sddual string, sdbsc string, sdcbsc string, sdpend string, sdrfrv string, sdmerl string,
+	sdhold string, sdhdbu string, sddmbu string, sdbcrc string, sdxkco string, sdxcto string, sdxsfx string, sdpoe string,
+	sdpmto string, sdpmtn string, sdspattn string, sdostp string, sdcatnm string, sdalloc string, sdallsts string, sdoscoreo string,
+	sdcmco string, sdkitdirty string, sdocitt string
+
+  FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4211/Transient/F4211_A"
+  USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+  
+ 
+ @Part_B = 
+	EXTRACT
+	sddcto string, sdkcoo string, sddoco string, sdlnid string, sdogno string, sdrlln string, sddmcs string, sdan8 string,
+	sdshan string, sdpa8 string, sddrqj string, sdtrdj string, sdpddj string, sdaddj string, sdivd string, sdcndj string, 
+	sddgl string, sdrsdj string, sdpefj string, sdppdj string, sditm string, sdfrmp string, sdthrp string, sdexdp string,
+	sdktln string, sdcpnt string, sdrkit string, sdktp string, sduorg string, sdsoqs string, sdsobk string, sdsocn string,
+	sdsone string, sduopn string, sdqtyt string, sdqrlv string, sduprc string, sdaexp string, sdaopn string, sdlprc string,
+	sduncs string, sdecst string, sdtcst string, sdtrdc string, sdfun2 string, sdcadc string, sddoc string, sdodoc string,
+	sdpsn string, sddeln string, sdvend string, sdcars string, sdpqor string, sdsqor string, sditwt string, sditvl string,
+	sdctry string, sdfy string, sdgrwt string, sdcrr string, sdfprc string, sdfup string, sdfea string, sdfuc string,
+	sdfec string, sdurdt string, sdurat string, sdurab string, sdupmj string, sdtday string, sdsoor string, sddeid string,
+	sdpmdt string, sdrltm string, sdrldj string, sddrqt string, sdadtm string, sdoptt string, sdpdtt string, sdpstm string,	
+	sdxpty string, sdcord string, sddvan string, sdmcln string, sdshpn string, sdrsdt string, sdprjm string, sdoseq string,
+	sdodln string, sdopdj string, sdxorn string, sdxlln string, sdanby string, sdnumb string, sdaaid string, sdpran8 string,
+	sdprcidln string, sdccidln string, sdshccidln string, sdoppid string, sdukid string, sdfulpid string,
+	sdoscore string, sdkitid string, sdkitamtdom string, sdkitamtfor string, sdoccardno string
+  FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4211/Transient/F4211_B"
+  USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+  
+  
+  @Combined_Part_A_B =
+	SELECT 
+	a.sddcto, a.sdkcoo, a.sddoco, a.sdlnid, a.sdsfxo, a.sdmcu, a.sdco, a.sdokco, a.sdoorn, a.sdocto, a.sdrkco, a.sdrorn, a.sdrcto, a.sddmct, a.sdvr01, a.sdvr02,
+	a.sdlitm, a.sdaitm, a.sdlocn, a.sdlotn, a.sdfrgd, a.sdthgd, a.sddsc1, a.sddsc2, a.sdlnty, a.sdnxtr, a.sdlttr, a.sdemcu, a.sdrlit, a.sdsrp1, a.sdsrp2, a.sdsrp3,
+	a.sdsrp4, a.sdsrp5, a.sdprp1, a.sdprp2, a.sdprp3, a.sdprp4, a.sdprp5, a.sduom, a.sdcomm, a.sdotqy, a.sdprov, a.sdtpc, a.sdapum, a.sdcsto, a.sdinmg, a.sdptc,
+	a.sdryin, a.sddtbs, a.sdasn, a.sdprgr, a.sdclvl, a.sdkco, a.sddct, a.sdodct, a.sdokc, a.sdtax1, a.sdtxa1, a.sdexr1, a.sdatxt, a.sdprio, a.sdresl, a.sdback, 
+	a.sdsbal, a.sdapts, a.sdlob, a.sdeuse, a.sddtys, a.sdntr, a.sdmot, a.sdrout, a.sdstop, a.sdzon, a.sdcnid, a.sdfrth, a.sdshcm, a.sdshcn, a.sdsern, a.sduom1,
+	a.sduom2, a.sduom4, a.sdwtum, a.sdvlum, a.sdrprc, a.sdorpr, a.sdorp, a.sdcmgp, a.sdglc, a.sdso01, a.sdso02, a.sdso03, a.sdso04, a.sdso05, a.sdso06, a.sdso07,
+	a.sdso08, a.sdso09, a.sdso10, a.sdso11, a.sdso12, a.sdso13, a.sdso14, a.sdso15, a.sdacom, a.sdcmcg, a.sdrcd, a.sdgwum, a.sdsbl, a.sdsblt, a.sdlcod, a.sdupc1,
+	a.sdupc2, a.sdupc3, a.sdswms, a.sduncd, a.sdcrmd, a.sdcrcd, a.sdurcd, a.sdurrf, a.sdtorg, a.sduser, a.sdpid, a.sdjobn, a.sdso16, a.sdso17, a.sdso18, a.sdso19,
+	a.sdso20, a.sdir01, a.sdir02, a.sdir03, a.sdir04, a.sdir05, a.sdvr03, a.sdpsig, a.sdrlnu, a.sdxdck, a.sddual, a.sdbsc, a.sdcbsc, a.sdpend, a.sdrfrv, a.sdmerl,
+	a.sdhold, a.sdhdbu, a.sddmbu, a.sdbcrc, a.sdxkco, a.sdxcto, a.sdxsfx, a.sdpoe, a.sdpmto, a.sdpmtn,  a.sdspattn, a.sdostp, a.sdcatnm, a.sdalloc, a.sdallsts, a.sdoscoreo,
+	a.sdcmco, a.sdkitdirty, a.sdocitt, 
+
+	//b.sddcto, b.sdkcoo, b.sddoco, b.sdlnid, 
+	
+	b.sdogno, b.sdrlln, b.sddmcs, b.sdan8, b.sdshan, b.sdpa8, b.sddrqj, b.sdtrdj, b.sdpddj, b.sdaddj, b.sdivd, b.sdcndj,
+	b.sddgl, b.sdrsdj, b.sdpefj, b.sdppdj, b.sditm, b.sdfrmp, b.sdthrp, b.sdexdp, b.sdktln, b.sdcpnt, b.sdrkit, b.sdktp, b.sduorg, b.sdsoqs, b.sdsobk, b.sdsocn,
+	b.sdsone, b.sduopn, b.sdqtyt, b.sdqrlv, b.sduprc, b.sdaexp, b.sdaopn, b.sdlprc, b.sduncs, b.sdecst, b.sdtcst, b.sdtrdc, b.sdfun2, b.sdcadc, b.sddoc, b.sdodoc,
+	b.sdpsn, b.sddeln, b.sdvend, b.sdcars, b.sdpqor, b.sdsqor, b.sditwt, b.sditvl, b.sdctry, b.sdfy, b.sdgrwt, b.sdcrr, b.sdfprc, b.sdfup, b.sdfea, b.sdfuc,
+	b.sdfec, b.sdurdt, b.sdurat, b.sdurab, b.sdupmj, b.sdtday, b.sdsoor, b.sddeid, b.sdpmdt, b.sdrltm, b.sdrldj, b.sddrqt, b.sdadtm, b.sdoptt, b.sdpdtt, b.sdpstm,
+	b.sdxpty, b.sdcord, b.sddvan, b.sdmcln, b.sdshpn, b.sdrsdt, b.sdprjm, b.sdoseq, b.sdodln, b.sdopdj, b.sdxorn, b.sdxlln, b.sdanby, b.sdnumb, b.sdaaid, b.sdpran8,
+	b.sdprcidln, b.sdccidln, b.sdshccidln, b.sdoppid, b.sdukid, b.sdfulpid, b.sdoscore, b.sdkitid, b.sdkitamtdom, b.sdkitamtfor, b.sdoccardno
+	 
+	FROM @Part_A AS a INNER JOIN @Part_B AS b
+	ON 
+			a.sddcto  ==  b.sddcto
+		AND	a.sdkcoo  ==  b.sdkcoo
+		AND	a.sddoco  ==  b.sddoco
+		AND	a.sdlnid  ==  b.sdlnid;
+	
+	
+	OUTPUT 	 @Combined_Part_A_B
+	TO  "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4211/Curated/F4211"
+	USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+  

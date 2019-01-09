@@ -1,0 +1,63 @@
+// For adding date part to File Name for daily incremental file
+DECLARE @fileDate string = "adl://lakehillman.azuredatalakestore.net/DATA/E1/F42119/Raw/Daily/F42119_" + DateTime.Now.AddDays(-1).ToString("MMddyyyy");
+
+
+//Get Base File from Raw
+ 
+@MergedbaseFiles =
+  EXTRACT 
+    sdkcoo  string, sddoco  string, sddcto  string, sdlnid  string, sdsfxo  string, sdmcu  string, sdco  string, sdokco  string, sdoorn  string, sdocto  string, sdogno  string, sdrkco  string, sdrorn  string, sdrcto  string, sdrlln  string, sddmct  string, sddmcs  string, sdan8  string, sdshan  string, sdpa8  string, sddrqj  string, sdtrdj  string, sdpddj  string, sdaddj  string, sdivd  string, sdcndj  string, sddgl  string, sdrsdj  string, sdpefj  string, sdppdj  string, sdvr01  string, sdvr02  string, sditm  string, sdlitm  string, sdaitm  string, sdlocn  string, sdlotn  string, sdfrgd  string, sdthgd  string, sdfrmp  string, sdthrp  string, sdexdp  string, sddsc1  string, sddsc2  string, sdlnty  string, sdnxtr  string, sdlttr  string, sdemcu  string, sdrlit  string, sdktln  string, sdcpnt  string, sdrkit  string, sdktp  string, sdsrp1  string, sdsrp2  string, sdsrp3  string, sdsrp4  string, sdsrp5  string, sdprp1  string, sdprp2  string, sdprp3  string, sdprp4  string, sdprp5  string, sduom  string, sduorg  string, sdsoqs  string, sdsobk  string, sdsocn  string, sdsone  string, sduopn  string, sdqtyt  string, sdqrlv  string, sdcomm  string, sdotqy  string, sduprc  string, sdaexp  string, sdaopn  string, sdprov  string, sdtpc  string, sdapum  string, sdlprc  string, sduncs  string, sdecst  string, sdcsto  string, sdtcst  string, sdinmg  string, sdptc  string, sdryin  string, sddtbs  string, sdtrdc  string, sdfun2  string, sdasn  string, sdprgr  string, sdclvl  string, sdcadc  string, sdkco  string, sddoc  string, sddct  string, sdodoc  string, sdodct  string, sdokc  string, sdpsn  string, sddeln  string, sdtax1  string, sdtxa1  string, sdexr1  string, sdatxt  string, sdprio  string, sdresl  string, sdback  string, sdsbal  string, sdapts  string, sdlob  string, sdeuse  string, sddtys  string, sdntr  string, sdvend  string, sdcars  string, sdmot  string, sdrout  string, sdstop  string, sdzon  string, sdcnid  string, sdfrth  string, sdshcm  string, sdshcn  string, sdsern  string, sduom1  string, sdpqor  string, sduom2  string, sdsqor  string, sduom4  string, sditwt  string, sdwtum  string, sditvl  string, sdvlum  string, sdrprc  string, sdorpr  string, sdorp  string, sdcmgp  string, sdglc  string, sdctry  string, sdfy  string, sdso01  string, sdso02  string, sdso03  string, sdso04  string, sdso05  string, sdso06  string, sdso07  string, sdso08  string, sdso09  string, sdso10  string, sdso11  string, sdso12  string, sdso13  string, sdso14  string, sdso15  string, sdacom  string, sdcmcg  string, sdrcd  string, sdgrwt  string, sdgwum  string, sdsbl  string, sdsblt  string, sdlcod  string, sdupc1  string, sdupc2  string, sdupc3  string, sdswms  string, sduncd  string, sdcrmd  string, sdcrcd  string, sdcrr  string, sdfprc  string, sdfup  string, sdfea  string, sdfuc  string, sdfec  string, sdurcd  string, sdurdt  string, sdurat  string, sdurab  string, sdurrf  string, sdtorg  string, sduser  string, sdpid  string, sdjobn  string, sdupmj  string, sdtday  string, sdso16  string, sdso17  string, sdso18  string, sdso19  string, sdso20  string, sdir01  string, sdir02  string, sdir03  string, sdir04  string, sdir05  string, sdsoor  string, sdvr03  string, sddeid  string, sdpsig  string, sdrlnu  string, sdpmdt  string, sdrltm  string, sdrldj  string, sddrqt  string, sdadtm  string, sdoptt  string, sdpdtt  string, sdpstm  string, sdxdck  string, sdxpty  string, sddual  string, sdbsc  string, sdcbsc  string, sdcord  string, sddvan  string, sdpend  string, sdrfrv  string, sdmcln  string, sdshpn  string, sdrsdt  string, sdprjm  string, sdoseq  string, sdmerl  string, sdhold  string, sdhdbu  string, sddmbu  string, sdbcrc  string, sdodln  string, sdopdj  string, sdxkco  string, sdxorn  string, sdxcto  string, sdxlln  string, sdxsfx  string, sdpoe  string, sdpmto  string, sdanby  string, sdpmtn  string, sdnumb  string, sdaaid  string, sdspattn  string, sdpran8  string, sdprcidln  string, sdccidln  string, sdshccidln  string, sdoppid  string, sdostp  string, sdukid  string, sdcatnm  string, sdalloc  string, sdfulpid  string, sdallsts  string, sdoscore  string, sdoscoreo  string, sdcmco  string, sdkitid  string, sdkitamtdom  string, sdkitamtfor  string, sdkitdirty  string, sdocitt  string, sdoccardno  string 
+
+  FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F42119/Raw/F42119_Base"
+  USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+ 
+ 
+
+//Get Delta File from Transient
+ 
+@deltaFiles =
+  EXTRACT 
+    sdkcoo  string, sddoco  string, sddcto  string, sdlnid  string, sdsfxo  string, sdmcu  string, sdco  string, sdokco  string, sdoorn  string, sdocto  string, sdogno  string, sdrkco  string, sdrorn  string, sdrcto  string, sdrlln  string, sddmct  string, sddmcs  string, sdan8  string, sdshan  string, sdpa8  string, sddrqj  string, sdtrdj  string, sdpddj  string, sdaddj  string, sdivd  string, sdcndj  string, sddgl  string, sdrsdj  string, sdpefj  string, sdppdj  string, sdvr01  string, sdvr02  string, sditm  string, sdlitm  string, sdaitm  string, sdlocn  string, sdlotn  string, sdfrgd  string, sdthgd  string, sdfrmp  string, sdthrp  string, sdexdp  string, sddsc1  string, sddsc2  string, sdlnty  string, sdnxtr  string, sdlttr  string, sdemcu  string, sdrlit  string, sdktln  string, sdcpnt  string, sdrkit  string, sdktp  string, sdsrp1  string, sdsrp2  string, sdsrp3  string, sdsrp4  string, sdsrp5  string, sdprp1  string, sdprp2  string, sdprp3  string, sdprp4  string, sdprp5  string, sduom  string, sduorg  string, sdsoqs  string, sdsobk  string, sdsocn  string, sdsone  string, sduopn  string, sdqtyt  string, sdqrlv  string, sdcomm  string, sdotqy  string, sduprc  string, sdaexp  string, sdaopn  string, sdprov  string, sdtpc  string, sdapum  string, sdlprc  string, sduncs  string, sdecst  string, sdcsto  string, sdtcst  string, sdinmg  string, sdptc  string, sdryin  string, sddtbs  string, sdtrdc  string, sdfun2  string, sdasn  string, sdprgr  string, sdclvl  string, sdcadc  string, sdkco  string, sddoc  string, sddct  string, sdodoc  string, sdodct  string, sdokc  string, sdpsn  string, sddeln  string, sdtax1  string, sdtxa1  string, sdexr1  string, sdatxt  string, sdprio  string, sdresl  string, sdback  string, sdsbal  string, sdapts  string, sdlob  string, sdeuse  string, sddtys  string, sdntr  string, sdvend  string, sdcars  string, sdmot  string, sdrout  string, sdstop  string, sdzon  string, sdcnid  string, sdfrth  string, sdshcm  string, sdshcn  string, sdsern  string, sduom1  string, sdpqor  string, sduom2  string, sdsqor  string, sduom4  string, sditwt  string, sdwtum  string, sditvl  string, sdvlum  string, sdrprc  string, sdorpr  string, sdorp  string, sdcmgp  string, sdglc  string, sdctry  string, sdfy  string, sdso01  string, sdso02  string, sdso03  string, sdso04  string, sdso05  string, sdso06  string, sdso07  string, sdso08  string, sdso09  string, sdso10  string, sdso11  string, sdso12  string, sdso13  string, sdso14  string, sdso15  string, sdacom  string, sdcmcg  string, sdrcd  string, sdgrwt  string, sdgwum  string, sdsbl  string, sdsblt  string, sdlcod  string, sdupc1  string, sdupc2  string, sdupc3  string, sdswms  string, sduncd  string, sdcrmd  string, sdcrcd  string, sdcrr  string, sdfprc  string, sdfup  string, sdfea  string, sdfuc  string, sdfec  string, sdurcd  string, sdurdt  string, sdurat  string, sdurab  string, sdurrf  string, sdtorg  string, sduser  string, sdpid  string, sdjobn  string, sdupmj  string, sdtday  string, sdso16  string, sdso17  string, sdso18  string, sdso19  string, sdso20  string, sdir01  string, sdir02  string, sdir03  string, sdir04  string, sdir05  string, sdsoor  string, sdvr03  string, sddeid  string, sdpsig  string, sdrlnu  string, sdpmdt  string, sdrltm  string, sdrldj  string, sddrqt  string, sdadtm  string, sdoptt  string, sdpdtt  string, sdpstm  string, sdxdck  string, sdxpty  string, sddual  string, sdbsc  string, sdcbsc  string, sdcord  string, sddvan  string, sdpend  string, sdrfrv  string, sdmcln  string, sdshpn  string, sdrsdt  string, sdprjm  string, sdoseq  string, sdmerl  string, sdhold  string, sdhdbu  string, sddmbu  string, sdbcrc  string, sdodln  string, sdopdj  string, sdxkco  string, sdxorn  string, sdxcto  string, sdxlln  string, sdxsfx  string, sdpoe  string, sdpmto  string, sdanby  string, sdpmtn  string, sdnumb  string, sdaaid  string, sdspattn  string, sdpran8  string, sdprcidln  string, sdccidln  string, sdshccidln  string, sdoppid  string, sdostp  string, sdukid  string, sdcatnm  string, sdalloc  string, sdfulpid  string, sdallsts  string, sdoscore  string, sdoscoreo  string, sdcmco  string, sdkitid  string, sdkitamtdom  string, sdkitamtfor  string, sdkitdirty  string, sdocitt  string, sdoccardno  string
+
+  FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F42119/Transient/F42119"
+  USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+
+  
+	
+//this is everything in the base that isn't represented in the delta file	
+@notIn =
+    SELECT *
+    FROM @MergedbaseFiles AS a
+         ANTISEMIJOIN
+         (
+         SELECT *
+         FROM @deltaFiles
+         ) AS sj
+         ON a.sdkcoo == sj.sdkcoo AND a.sddoco == sj.sddoco AND a.sddcto == sj.sddcto AND a.sdlnid == sj.sdlnid ;
+
+
+@mergedFile =
+    SELECT *
+    FROM @notIn
+    UNION ALL
+    SELECT *
+    FROM @deltaFiles;	
+ 
+
+ // Output for Updated  Merged File     
+ OUTPUT @mergedFile
+  TO "adl://lakehillman.azuredatalakestore.net/DATA/E1/F42119/Raw/F42119_Base"
+USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+ 
+ 
+ // Output for daily delta file     
+ OUTPUT @deltaFiles
+  TO "adl://lakehillman.azuredatalakestore.net/DATA/E1/F42119/Curated/F42119"
+USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+                
+				
+// Output of Previous Day data                  
+OUTPUT @deltaFiles
+  TO @fileDate
+  USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+

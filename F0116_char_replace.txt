@@ -1,0 +1,62 @@
+﻿//Extract data from the file in Transient folder
+
+@replaceStep1 = 
+				EXTRACT
+						alan8 string,
+						aleftb string,
+						aleftf string,
+						aladd1 string,
+						aladd2 string,
+						aladd3 string,
+						aladd4 string,
+						aladdz string,
+						alcty1 string,
+						alcoun string,
+						aladds string,
+						alcrte string,
+						albkml string,
+						alctr string,
+						aluser string,
+						alpid string,
+						alupmj string,
+						aljobn string,
+						alupmt string,
+						alsyncs string,
+						alcaad string
+	FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F0116/Transient/F0116_USQL_Char_Replace"
+  USING Extractors.Text(rowDelimiter:"æ",  delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+  
+
+// Replace characters from the extracted data ( Tab, CRLF, New Line)
+@replaceStep2 =
+		SELECT		alan8,
+				aleftb,
+				aleftf,
+				aladd1.Replace( "\t","" ).Replace( "\r\n","").Replace("\n", "").Replace("\r","") AS aladd1,
+				aladd2.Replace( "\t","" ).Replace( "\r\n","").Replace("\n", "").Replace("\r","") AS aladd2,
+				aladd3.Replace( "\t","" ).Replace( "\r\n","").Replace("\n", "").Replace("\r","") AS aladd3,
+				aladd4.Replace( "\t","" ).Replace( "\r\n","").Replace("\n", "").Replace("\r","") AS aladd4,
+				aladdz.Replace( "\t","" ).Replace( "\r\n","").Replace("\n", "").Replace("\r","") AS aladdz,
+				alcty1.Replace( "\t","" ).Replace( "\r\n","").Replace("\n", "").Replace("\r","") AS alcty1,
+				alcoun.Replace( "\t","" ).Replace( "\r\n","").Replace("\n", "").Replace("\r","") AS alcoun,
+				aladds,
+				alcrte,
+				albkml,
+				alctr,
+				aluser,
+				alpid,
+				alupmj,
+				aljobn,
+				alupmt,
+				alsyncs,
+				alcaad
+	FROM @replaceStep1;
+	
+	
+
+// Overwrite data after replacing the characters(Tab, CRLF, New Line)
+OUTPUT @replaceStep2
+  TO "adl://lakehillman.azuredatalakestore.net/DATA/E1/F0116/Transient/F0116_USQL_Char_Replace"
+USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+
+REPLACESTR*(0, COLUMN_NAME, *CHR*(13),*CHR*(10),' ') 

@@ -1,0 +1,82 @@
+@base0 =
+  EXTRACT   
+slkcoo  string,   sldoco  string,  sldcto  string,  sllnid  string,  slsfxo  string,  slmcu  string,  slco  string,  slokco  string,  sloorn  string,  slocto  string,  slogno  string,  slrkco  string,  slrorn  string,  slrcto  string,  slrlln  string,  sldmct   string,  sldmcs  string,  slan8  string,  slshan  string,  slpa8  string,  sldrqj  string,  sltrdj  string,  slpddj  string,  sladdj   string,  slivd  string,  slcndj  string,  sldgl  string,  slrsdj  string,  slpefj  string,  slppdj  string,  slvr01  string,  slvr02   string,  slitm  string,  sllitm  string,  slaitm  string,  sllocn  string,  sllotn  string,  slfrgd  string,  slthgd  string,  slfrmp   string,  slthrp  string,  slexdp  string,  sldsc1  string,  sldsc2  string,  sllnty  string,  slnxtr  string,  sllttr  string,  slemcu   string,  slrlit  string,  slktln  string,  slcpnt  string,  slrkit  string,  slktp  string,  slsrp1  string,  slsrp2  string,  slsrp3  string,  slsrp4 string,  slsrp5  string,  slprp1  string,  slprp2  string,  slprp3  string,  slprp4  string,  slprp5  string,  sluom  string,  sluorg string,  slsoqs  string,  slsobk  string,  slsocn  string,  slsone  string,  sluopn  string,  slqtyt  string,  slqrlv  string,  slcomm string,  slotqy  string,  sluprc  string,  slaexp  string,  slaopn  string,  slprov  string,  sltpc  string,  slapum  string,  sllprc string,  sluncs  string,  slecst  string,  slcsto  string,  sltcst  string,  slinmg  string,  slptc  string,  slryin  string,  sldtbs string,  sltrdc  string,  slfun2  string,  slasn  string,  slprgr  string,  slclvl  string,  slcadc  string,  slkco  string,  sldoc string,  sldct  string,  slodoc  string,  slodct  string,  slokc  string,  slpsn  string,  sldeln  string,  sltax1  string,  sltxa1 string,  slexr1  string,  slatxt  string,  slprio  string,  slresl  string,  slback  string,  slsbal  string,  slapts  string,  sllob string,  sleuse  string,  sldtys  string,  slntr  string,  slvend  string,  slcars  string,  slmot  string,  slrout  string,  slstop string,  slzon  string,  slcnid  string,  slfrth  string,  slshcm  string,  slshcn  string,  slsern  string,  sluom1  string,  slpqor string,  sluom2  string,  slsqor  string,  sluom4  string,  slitwt  string,  slwtum  string,  slitvl  string,  slvlum  string,  slrprc string,  slorpr  string,  slorp  string,  slcmgp  string,  slglc  string,  slctry  string,  slfy  string,  slso01  string,  slso02 string,  slso03  string,  slso04  string,  slso05  string,  slso06  string,  slso07  string,  slso08  string,  slso09  string,  slso10 string,  slso11  string,  slso12  string,  slso13  string,  slso14  string,  slso15  string,  slacom  string,  slcmcg  string,  slrcd string,  slgrwt  string,  slgwum  string,  slsbl  string,  slsblt  string,  sllcod  string,  slupc1  string,  slupc2  string,  slupc3 string,  slswms  string,  sluncd  string,  slcrmd  string,  slcrcd  string,  slcrr  string,  slfprc  string,  slfup  string,  slfea string,  slfuc  string,  slfec  string,  slurcd  string,  slurdt  string,  slurat  string,  slurab  string,  slurrf  string,  sltorg string,  sluser  string,  slpid  string,  sljobn  string,  slupmj  string,  sltday  string,  slso16  string,  slso17  string,  slso18 string,  slso19  string,  slso20  string,  slir01  string,  slir02  string,  slir03  string,  slir04  string,  slir05  string,  slsoor string,  slvr03  string,  sldeid  string,  slpsig  string,  slrlnu  string,  slpmdt  string,  slrltm  string,  slrldj  string,  sldrqt string,  sladtm  string,  sloptt  string,  slpdtt  string,  slpstm  string,  slxdck  string,  slxpty  string,  sldual  string,  slbsc string,  slcbsc  string,  slcord  string,  sldvan  string,  slpend  string,  slrfrv  string,  slmcln  string,  slshpn  string,  slrsdt string,  slprjm  string,  sloseq  string,  slmerl  string,  slhold  string,  slhdbu  string,  sldmbu  string,  slbcrc  string,  slodln string,  slopdj  string,  slxkco  string,  slxorn  string,  slxcto  string,  slxlln  string,  slxsfx  string,  slpoe  string,  slpmto string,  slanby  string,  slpmtn  string,  slnumb  string,  slaaid  string,  slpran8  string,  slspattn  string,  slprcidln  string, slccidln  string,  slshccidln  string,  sloppid  string,  slostp  string,  slukid  string,  slcatnm  string,  slalloc  string,  slfulpid string,  slallsts  string,  sloscore  string,  sloscoreo  string,  slcmco  string,  slkitid  string,  slkitamtdom  string, slkitamtfor  string,  slkitdirty  string,  slocitt  string,  sloccardno  string
+ 
+  FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F42199/Raw/F42199_Base"
+   USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+
+@base1 = SELECT *
+         FROM @base0
+         WHERE slupmj.Equals("118307");
+
+
+@base2 =
+  EXTRACT   
+slkcoo  string,   sldoco  string,  sldcto  string,  sllnid  string,  slsfxo  string,  slmcu  string,  slco  string,  slokco  string,  sloorn  string,  slocto  string,  slogno  string,  slrkco  string,  slrorn  string,  slrcto  string,  slrlln  string,  sldmct   string,  sldmcs  string,  slan8  string,  slshan  string,  slpa8  string,  sldrqj  string,  sltrdj  string,  slpddj  string,  sladdj   string,  slivd  string,  slcndj  string,  sldgl  string,  slrsdj  string,  slpefj  string,  slppdj  string,  slvr01  string,  slvr02   string,  slitm  string,  sllitm  string,  slaitm  string,  sllocn  string,  sllotn  string,  slfrgd  string,  slthgd  string,  slfrmp   string,  slthrp  string,  slexdp  string,  sldsc1  string,  sldsc2  string,  sllnty  string,  slnxtr  string,  sllttr  string,  slemcu   string,  slrlit  string,  slktln  string,  slcpnt  string,  slrkit  string,  slktp  string,  slsrp1  string,  slsrp2  string,  slsrp3  string,  slsrp4 string,  slsrp5  string,  slprp1  string,  slprp2  string,  slprp3  string,  slprp4  string,  slprp5  string,  sluom  string,  sluorg string,  slsoqs  string,  slsobk  string,  slsocn  string,  slsone  string,  sluopn  string,  slqtyt  string,  slqrlv  string,  slcomm string,  slotqy  string,  sluprc  string,  slaexp  string,  slaopn  string,  slprov  string,  sltpc  string,  slapum  string,  sllprc string,  sluncs  string,  slecst  string,  slcsto  string,  sltcst  string,  slinmg  string,  slptc  string,  slryin  string,  sldtbs string,  sltrdc  string,  slfun2  string,  slasn  string,  slprgr  string,  slclvl  string,  slcadc  string,  slkco  string,  sldoc string,  sldct  string,  slodoc  string,  slodct  string,  slokc  string,  slpsn  string,  sldeln  string,  sltax1  string,  sltxa1 string,  slexr1  string,  slatxt  string,  slprio  string,  slresl  string,  slback  string,  slsbal  string,  slapts  string,  sllob string,  sleuse  string,  sldtys  string,  slntr  string,  slvend  string,  slcars  string,  slmot  string,  slrout  string,  slstop string,  slzon  string,  slcnid  string,  slfrth  string,  slshcm  string,  slshcn  string,  slsern  string,  sluom1  string,  slpqor string,  sluom2  string,  slsqor  string,  sluom4  string,  slitwt  string,  slwtum  string,  slitvl  string,  slvlum  string,  slrprc string,  slorpr  string,  slorp  string,  slcmgp  string,  slglc  string,  slctry  string,  slfy  string,  slso01  string,  slso02 string,  slso03  string,  slso04  string,  slso05  string,  slso06  string,  slso07  string,  slso08  string,  slso09  string,  slso10 string,  slso11  string,  slso12  string,  slso13  string,  slso14  string,  slso15  string,  slacom  string,  slcmcg  string,  slrcd string,  slgrwt  string,  slgwum  string,  slsbl  string,  slsblt  string,  sllcod  string,  slupc1  string,  slupc2  string,  slupc3 string,  slswms  string,  sluncd  string,  slcrmd  string,  slcrcd  string,  slcrr  string,  slfprc  string,  slfup  string,  slfea string,  slfuc  string,  slfec  string,  slurcd  string,  slurdt  string,  slurat  string,  slurab  string,  slurrf  string,  sltorg string,  sluser  string,  slpid  string,  sljobn  string,  slupmj  string,  sltday  string,  slso16  string,  slso17  string,  slso18 string,  slso19  string,  slso20  string,  slir01  string,  slir02  string,  slir03  string,  slir04  string,  slir05  string,  slsoor string,  slvr03  string,  sldeid  string,  slpsig  string,  slrlnu  string,  slpmdt  string,  slrltm  string,  slrldj  string,  sldrqt string,  sladtm  string,  sloptt  string,  slpdtt  string,  slpstm  string,  slxdck  string,  slxpty  string,  sldual  string,  slbsc string,  slcbsc  string,  slcord  string,  sldvan  string,  slpend  string,  slrfrv  string,  slmcln  string,  slshpn  string,  slrsdt string,  slprjm  string,  sloseq  string,  slmerl  string,  slhold  string,  slhdbu  string,  sldmbu  string,  slbcrc  string,  slodln string,  slopdj  string,  slxkco  string,  slxorn  string,  slxcto  string,  slxlln  string,  slxsfx  string,  slpoe  string,  slpmto string,  slanby  string,  slpmtn  string,  slnumb  string,  slaaid  string,  slpran8  string,  slspattn  string,  slprcidln  string, slccidln  string,  slshccidln  string,  sloppid  string,  slostp  string,  slukid  string,  slcatnm  string,  slalloc  string,  slfulpid string,  slallsts  string,  sloscore  string,  sloscoreo  string,  slcmco  string,  slkitid  string,  slkitamtdom  string, slkitamtfor  string,  slkitdirty  string,  slocitt  string,  sloccardno  string
+ 
+  FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F42199/Raw/F42199_258_358"
+   USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false); 
+//
+ @base3 = SELECT *
+         FROM @base2
+         WHERE slupmj.Equals("118307");
+
+
+
+@commonrows =
+    SELECT *
+    FROM @base1
+    EXCEPT ALL
+    SELECT *
+    FROM @base3;
+
+///this is everything in the base that isn't represented in the delta file	
+@notIn =
+    SELECT *
+    FROM @base1 AS a
+         ANTISEMIJOIN
+         (
+         SELECT *
+         FROM @base3
+         ) AS sj
+         ON a.slkcoo == sj.slkcoo 
+		 AND a.sldoco == sj.sldoco 
+		 AND a.sldcto == sj.sldcto 
+		 AND a.sllnid == sj.sllnid 
+		 AND a.sltday == sj.sltday
+		 AND a.slupmj == sj.slupmj;
+
+// Merge both @notin and @delta	 
+//@mergedFile =
+//    SELECT *
+//    FROM @notIn
+//  
+//    UNION ALL
+//    SELECT * 
+//    FROM @base1
+//  ;	
+
+
+//@mergedFilecnt =
+//    SELECT slupmj,
+//           COUNT(slupmj) AS rowcnt
+//    FROM @base0
+//    GROUP BY slupmj;
+
+ 
+
+//  Output for Updated  Merged File     
+ OUTPUT @commonrows
+  TO "adl://lakehillman.azuredatalakestore.net/DATA/E1/F42199/Raw/F42199_CR"
+//  USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+ USING Outputters.Csv();
+ 
+ 
+ // Output for daily delta File into Curated
+ OUTPUT @notIn
+ TO "adl://lakehillman.azuredatalakestore.net/DATA/E1/F42199/Raw/notIn" 
+ // USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+
+//ORDER BY slupmj
+ USING Outputters.Csv();
+ 

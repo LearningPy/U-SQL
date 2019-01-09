@@ -1,0 +1,93 @@
+// For adding date part to File Name for daily incremental file
+DECLARE @fileDate string = "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4072/Raw/Daily/F4072_" + DateTime.Now.AddDays(-1).ToString("MMddyyyy");
+
+
+//Get Base File from Raw
+ 
+@MergedbaseFiles =
+  EXTRACT 
+    adast string, aditm string, adlitm string, adaitm string, 
+	adan8 string, adigid string, adcgid string, adogid string, 
+	adcrcd string, aduom string, admnq string, adeftj string, 
+	adexdj string, adbscd string, adledg string, adfrmn string, 
+	adfvtr string, adfgy string, adatid string, adurcd string, 
+	adurdt string, adurat string, adurab string, adurrf string, 
+	adnbrord string, aduomvid string, adfvum string, adpartfg string, 
+	adaprs string, aduser string, adpid string, adjobn string, adupmj string, 
+	adtday string, adbktpid string, adcrcdvid string, adrulename string 
+
+  FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4072/Raw/F4072_Base"
+  USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+ 
+  
+ 
+//Get Delta File from Transient
+ 
+@deltaFiles =
+  EXTRACT 
+     adast string, aditm string, adlitm string, adaitm string, 
+	 adan8 string, adigid string, adcgid string, adogid string, 
+	 adcrcd string, aduom string, admnq string, adeftj string, 
+	 adexdj string, adbscd string, adledg string, adfrmn string, 
+	 adfvtr string, adfgy string, adatid string, adurcd string, 
+	 adurdt string, adurat string, adurab string, adurrf string, 
+	 adnbrord string, aduomvid string, adfvum string, adpartfg string, 
+	 adaprs string, aduser string, adpid string, adjobn string, adupmj string, 
+	 adtday string, adbktpid string, adcrcdvid string, adrulename string 
+
+  FROM "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4072/Transient/F4072"
+  USING Extractors.Text(delimiter: 'Æ', skipFirstNRows: 1, quoting: false);
+
+  
+	
+//this is everything in the base that isn't represented in the delta file	
+@notIn =
+    SELECT *
+    FROM @MergedbaseFiles AS a
+         ANTISEMIJOIN
+         (
+         SELECT *
+         FROM @deltaFiles
+         ) AS sj
+         ON a.aditm == sj.aditm 
+		 AND a.adast == sj.adast 
+		 AND a.adan8 == sj.adan8 
+		 AND a.adigid == sj.adigid 
+		 AND a.adcgid == sj.adcgid
+		 AND a.adogid == sj.adogid 
+		 AND a.adcrcd == sj.adcrcd 
+		 AND a.aduom == sj.aduom 
+		 AND a.admnq == sj.admnq
+		 AND a.adexdj == sj.adexdj 
+		 AND a.adupmj == sj.adupmj 
+		 AND a.adtday == sj.adtday;
+		 
+		 
+// Merge both @notin and @delta	 
+@mergedFile =
+    SELECT *
+    FROM @notIn
+    UNION ALL
+    SELECT *
+    FROM @deltaFiles;	
+ 
+ 
+
+ // Output for Updated  Merged File     
+ OUTPUT @mergedFile
+  TO "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4072/Raw/F4072_Base"
+USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+
+// Output for daily delta file into Curated folder     
+ OUTPUT @deltaFiles
+  TO "adl://lakehillman.azuredatalakestore.net/DATA/E1/F4072/Curated/F4072"
+USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+ 
+                
+// Output of Previous Day data                  
+//OUTPUT @deltaFiles
+ // TO @fileDate
+ // USING Outputters.Text(outputHeader: true, delimiter: 'Æ', quoting: false);
+
+
+   
